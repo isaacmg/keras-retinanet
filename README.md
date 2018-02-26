@@ -23,6 +23,11 @@ If you installed `keras-retinanet` correctly, the train script will be installed
 However, if you make local modifications to the `keras-retinanet` repository, you should run the script directly from the repository.
 That will ensure that your local changes will be used by the train script.
 
+The default backbone is 'resnet50'. You can change this using the '--backbone=xxx' argument in the running script.
+xxx can be one of the backbones in resnet models (resnet50, resnet101, resnet152) or mobilenet models 
+(mobilenet128_1.0, mobilenet128_0.75, mobilenet160_1.0, etc). The different options are defined by each model in 
+their corresponding python scripts (resnet.py, mobilenet.py, etc).
+
 ### Usage
 For training on [Pascal VOC](http://host.robots.ox.ac.uk/pascal/VOC/), run:
 ```shell
@@ -187,7 +192,8 @@ Example output images using `keras-retinanet` are shown below.
 
 ### Notes
 * This repository requires Keras 2.1.3.
-* This repository is tested using OpenCV 3.4.
+* This repository is [tested](https://github.com/fizyr/keras-retinanet/blob/master/.travis.yml) using OpenCV 3.4.
+* This repository is [tested](https://github.com/fizyr/keras-retinanet/blob/master/.travis.yml) using Python 2.7 and 3.6.
 * Warnings such as `UserWarning: Output "non_maximum_suppression_1" missing from loss dictionary.` can safely be ignored. These warnings indicate no loss is connected to these outputs, but they are intended to be outputs of the network for the user (ie. resulting network detections) and not loss outputs.
 
 Contributions to this project are welcome.
