@@ -156,7 +156,7 @@ def run(generator, args):
             labels, boxes, _ = generator.anchor_targets(image.shape, annotations, generator.num_classes())
             draw_boxes(image, boxes[np.max(labels, axis=1) == 1], (0, 255, 0))
 
-        cv2.imshow('Image', image)
+        cv2.imsave('file' + str(i) + '.png', image)
         if cv2.waitKey() == ord('q'):
             return False
     return True
