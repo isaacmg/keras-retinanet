@@ -68,7 +68,9 @@ def densenet_retinanet(num_classes, backbone='densenet121', inputs=None, **kwarg
 
     # create the densenet backbone
     densenet = keras.models.Model(inputs=inputs, outputs=outputs, name=densenet.name)
-
+    # invoke modifier if given
+    if modifier:
+        densenet = modifier(densenet)
     # create the full model
     model = retinanet.retinanet_bbox(inputs=inputs, num_classes=num_classes, backbone=densenet, **kwargs)
 
