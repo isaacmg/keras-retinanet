@@ -55,7 +55,7 @@ def validate_backbone(backbone):
         raise ValueError('Backbone (\'{}\') not in allowed backbones ({}).'.format(backbone, list(allowed_backbones.keys())))
 
 
-def densenet_retinanet(num_classes, backbone='densenet121', inputs=None, **kwargs):
+def densenet_retinanet(num_classes, backbone='densenet121', modifier=None, inputs=None, **kwargs):
     # choose default input
     if inputs is None:
         inputs = keras.layers.Input((None, None, 3))
