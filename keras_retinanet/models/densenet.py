@@ -26,7 +26,7 @@ custom_objects = retinanet.custom_objects
 allowed_backbones = {'densenet121': [6, 12, 24, 16], 'densenet169': [6, 12, 32, 32], 'densenet201': [6, 12, 48, 32]}
 
 
-def download_imagenet(backbone):
+def download_imagenet(backbone, weights_url=None):
     """ Download pre-trained weights for the specified backbone name. This name is in the format
         {backbone}_weights_tf_dim_ordering_tf_kernels_notop where backbone is the densenet + number of layers (e.g. densenet121).
         For more info check the explanation from the keras densenet script itself:
@@ -38,9 +38,11 @@ def download_imagenet(backbone):
     # load weights
     if keras.backend.image_data_format() == 'channels_first':
         raise ValueError('Weights for "channels_first" format are not available.')
-
-    weights_url = WEIGHT_PATH.format(backbone)
-    weights_path = get_file(weights_url.split("v0.8/")[1], weights_url, cache_subdir='models')
+    if weights_url is None:
+       weights_url = WEIGHT_PATH.format(backbone)
+    split_url = weights_url.split("/")
+    print("the split url is " + split_url[len(split_url)-1])
+    weights_path = get_file(split_url[len(split_url)-1], weights_url, cache_subdir='models')
 
     return weights_path
 
