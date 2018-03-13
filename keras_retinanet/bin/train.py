@@ -303,6 +303,7 @@ def parse_args(args):
     parser.add_argument('--no-snapshots',    help='Disable saving snapshots.', dest='snapshots', action='store_false')
     parser.add_argument('--no-evaluation',   help='Disable per epoch evaluation.', dest='evaluation', action='store_false')
     parser.add_argument('--freeze-backbone', help='Freeze training of backbone layers.', action='store_true')
+    parser.add_argument('--backbone-weight', help='URL to the weights of the Backbone model used by retinanet.', default='resnet50', type=str)
     parser.add_argument('--lr', help='Learning rate for model.', default=1e-5)
 
     return check_args(parser.parse_args(args))
@@ -344,7 +345,7 @@ def main(args=None):
         weights = args.weights
         # default to imagenet if nothing else is specified
         if weights is None and args.imagenet_weights:
-            weights = download_imagenet(args.backbone)
+            weights = download_imagenet(args.backbone, args.backbone_weight)
 
         print('Creating model, this may take a second...')
         model, training_model, prediction_model = create_models(
