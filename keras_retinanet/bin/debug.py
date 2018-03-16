@@ -157,8 +157,7 @@ def run(generator, args):
             draw_boxes(image, boxes[np.max(labels, axis=1) == 1], (0, 255, 0))
 
         cv2.imsave('file' + str(i) + '.png', image)
-        if cv2.waitKey() == ord('q'):
-            return False
+        
     return True
 
 
@@ -172,7 +171,7 @@ def main(args=None):
     generator = create_generator(args)
 
     # create the display window
-    cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
+    #cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 
     if args.loop:
         while run(generator, args):
