@@ -30,26 +30,33 @@ custom_objects.update(keras_resnet.custom_objects)
 allowed_backbones = ['resnet50', 'resnet101', 'resnet152']
 
 
-def download_imagenet(backbone):
-    validate_backbone(backbone)
+def download_imagenet(backbone, weights_url=None):
+    if weights_url is None:
+        validate_backbone(backbone)
 
-    backbone = int(backbone.replace('resnet', ''))
+        backbone = int(backbone.replace('resnet', ''))
 
-    filename = resnet_filename.format(backbone)
-    resource = resnet_resource.format(backbone)
-    if backbone == 50:
-        checksum = '3e9f4e4f77bbe2c9bec13b53ee1c2319'
-    elif backbone == 101:
-        checksum = '05dc86924389e5b401a9ea0348a3213c'
-    elif backbone == 152:
-        checksum = '6ee11ef2b135592f8031058820bb9e71'
+        filename = resnet_filename.format(backbone)
+        resource = resnet_resource.format(backbone)
+        if backbone == 50:
+            checksum = '3e9f4e4f77bbe2c9bec13b53ee1c2319'
+        elif backbone == 101:
+            checksum = '05dc86924389e5b401a9ea0348a3213c'
+        elif backbone == 152:
+            checksum = '6ee11ef2b135592f8031058820bb9e71'
 
-    return keras.applications.imagenet_utils.get_file(
-        filename,
-        resource,
-        cache_subdir='models',
-        md5_hash=checksum
-    )
+        return keras.applications.imagenet_utils.get_file(
+            filename,
+            resource,
+            cache_subdir='models',
+            md5_hash=checksum
+        )
+    
+    # Load custom trained weights
+    split_url = weights_url.split("/")
+    print("the split url is " + split_url[len(split_url) - 1])
+    weights_path = get_file(split_url[len(split_url) - 1], weights_url, cache_subdir='models')
+    return weights_path
 
 
 def validate_backbone(backbone):
