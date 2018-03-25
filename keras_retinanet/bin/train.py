@@ -79,9 +79,10 @@ def create_models(backbone_retinanet, backbone, num_classes, weights, multi_gpu=
             from keras import regularizers
             ayers = []
             for layer in model.layers:
-                layer.kernel_regularizer = regularizers.l2(0.01)
+                layer.kernel_regularizer = regularizers.l2(regularization)
                 ayers.append(layer)
             model.layers=ayers
+            print("sucessfully updated layers to include reg of " + str(regularization))
         training_model   = model
         prediction_model = model
 
