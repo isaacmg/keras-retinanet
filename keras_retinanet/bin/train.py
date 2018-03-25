@@ -366,7 +366,8 @@ def main(args=None):
             weights=weights,
             multi_gpu=args.multi_gpu,
             freeze_backbone=args.freeze_backbone,
-            learning_rate=args.lr
+            learning_rate=args.lr,
+            regularization=args.regularization
         )
 
     # print model summary
