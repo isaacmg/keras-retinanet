@@ -56,7 +56,7 @@ def model_with_weights(model, weights, skip_mismatch):
     return model
 
 
-def create_models(backbone_retinanet, backbone, num_classes, weights, multi_gpu=0, freeze_backbone=False, learning_rate=1e-5):
+def create_models(backbone_retinanet, backbone, num_classes, weights, multi_gpu=0, freeze_backbone=False, learning_rate=1e-5, regularization=0):
     modifier = freeze_model if freeze_backbone else None
 
     # Keras recommends initialising a multi-gpu model on the CPU to ease weight sharing, and to prevent OOM errors.
@@ -73,7 +73,15 @@ def create_models(backbone_retinanet, backbone, num_classes, weights, multi_gpu=
         detections       = layers.NonMaximumSuppression(name='nms')([boxes, classification, detections])
         prediction_model = keras.models.Model(inputs=model.inputs, outputs=model.outputs[:2] + [detections])
     else:
+        
         model            = model_with_weights(backbone_retinanet(num_classes, backbone=backbone, nms=True, modifier=modifier), weights=weights, skip_mismatch=True)
+        if regularization is not 0:
+            from keras import regularizers
+            ayers = []
+            for layer in model.layers:
+                layer.kernel_regularizer = regularizers.l2(0.01)
+                ayers.append(layer)
+            model.layers=ayers
         training_model   = model
         prediction_model = model
 
