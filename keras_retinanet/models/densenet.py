@@ -75,4 +75,4 @@ def densenet_retinanet(num_classes, backbone='densenet121', modifier=None, input
     # create the full model
     model = retinanet.retinanet_bbox(inputs=inputs, num_classes=num_classes, backbone=densenet, **kwargs)
 
-return model
+    return model
