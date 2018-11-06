@@ -22,6 +22,24 @@ import sys
 
 import keras
 import tensorflow as tf
+import keras.callbacks.TensorBoard as TBCallback
+
+def make_tensorboard_callack(tensorboard_dir, eb_data):
+    cb = TBCallback(
+                log_dir                = tensorboard_dir,
+                histogram_freq         = 0,
+                batch_size             = args.batch_size,
+                write_graph            = True,
+                write_grads            = False,
+                write_images           = False,
+                embeddings_freq        = 0,
+                embeddings_layer_names = None,
+                embeddings_metadata    = None,
+                embedding_data = eb_data
+        
+            )
+       
+    return cb
 
 # Allow relative imports when being executed as script.
 if __name__ == "__main__" and __package__ is None:
